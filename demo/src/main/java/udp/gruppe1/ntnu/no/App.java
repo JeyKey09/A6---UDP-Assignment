@@ -26,23 +26,23 @@ public class App
     }
 
     public static int wordCount(String text){
-        if(text.isBlank()){
-            return 0;
-        }
         if(!text.contains(" ")){
             return 1;
         }
-        return text.split(" ").length;
+        if(!text.matches("[a-z A-Z 0-9 , . !]*")){
+            return 0;
+        } 
+        System.out.println("Tom");
+            System.out.println(text.split(" ").length);
+            return text.split(" ").length;
+        
     }
 
     public static String isQuestion(String text){
         if(text.contains("?")){
             return "question";
         }
-        if(text.contains("!")){
-            return "statement";
-        }
-        return "neither";
+        return "statement";
     }
 
 }

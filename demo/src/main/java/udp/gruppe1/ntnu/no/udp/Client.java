@@ -1,5 +1,6 @@
 package udp.gruppe1.ntnu.no.udp;
 
+import java.lang.reflect.GenericArrayType;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -12,7 +13,7 @@ public class Client {
 
     public static String sendAndReceive(String hostname, int port, String message)
             throws UnexpectedException, IllegalArgumentException {
-        if (port > 0 || hostname == null || hostname.isEmpty() || message.isEmpty()) {
+        if (port < 0 || hostname == null || hostname.isEmpty() || message.isEmpty()) {
             throw new IllegalArgumentException("Some of the argument is not valid");
         }
         byte[] buffer = new byte[1024];
@@ -20,7 +21,7 @@ public class Client {
         try {
             InetAddress address = InetAddress.getByName(hostname);
             DatagramPacket response = new DatagramPacket(buffer, buffer.length);
-            DatagramPacket request = new DatagramPacket(message.getBytes(), buffer.length, address, port);
+            DatagramPacket request = new DatagramPacket(message.getBytes(), message.getBytes().length, address, port);
             try (DatagramSocket socket = new DatagramSocket()) {
                 socket.send(request);
                 socket.receive(response);

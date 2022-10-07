@@ -1,14 +1,11 @@
 package udp.gruppe1.ntnu.no;
 
-import java.lang.reflect.Array;
-
 /**
  * Hello world!
  *
  */
 public class App 
 {
-
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );

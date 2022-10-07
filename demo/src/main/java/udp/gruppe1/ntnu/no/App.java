@@ -21,17 +21,17 @@ public class App
                     String responseMessage = isQuestion(task)+" "+wordCount(task);
                     if(client.sendAndReceive(hostadress, port, responseMessage).equals("ok")){
                         System.out.println("We did it!");
-                    } else{
-                        System.out.println("We did not do it!");
+                    }
+                    else{
+                        throw new UnexpectedException("We fucked up on the task"+task+"\n Sent response as: "+responseMessage);
                     }
                 } catch (Exception e) {
                     System.out.println("We fucked up!");
                 }
             }
         } catch (Exception e) {
-            throw new UnexpectedException("Couldn't create a socket");
+            throw new UnexpectedException("Something went wrong");
         } 
-
     }
 
     public static int wordCount(String text){

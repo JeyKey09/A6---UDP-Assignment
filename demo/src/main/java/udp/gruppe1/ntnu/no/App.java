@@ -1,5 +1,7 @@
 package udp.gruppe1.ntnu.no;
 
+import java.rmi.UnexpectedException;
+
 import udp.gruppe1.ntnu.no.udp.Client;
 
 /**
@@ -8,21 +10,26 @@ import udp.gruppe1.ntnu.no.udp.Client;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws UnexpectedException
     {
-        String hostadress = "129.241.152.12";
-        int port = 1234;
-        try {
-            String task = Client.sendAndReceive(hostadress, port, "task");
-            String responseMessage = isQuestion(task)+" "+wordCount(task);
-            if(Client.sendAndReceive(hostadress, port, responseMessage).equals("ok")){
-                System.out.println("We did it!");
-            } else{
-                System.out.println("We did not do it!");
+        try(Client client = new Client();) {
+            String hostadress = "129.241.152.12";
+            int port = 1234;
+            try {
+                String task = client.sendAndReceive(hostadress, port, "task");
+                String responseMessage = isQuestion(task)+" "+wordCount(task);
+                if(client.sendAndReceive(hostadress, port, responseMessage).equals("ok")){
+                    System.out.println("We did it!");
+                } else{
+                    System.out.println("We did not do it!");
+                }
+            } catch (Exception e) {
+                System.out.println("We fucked up!");
             }
         } catch (Exception e) {
-            System.out.println("We fucked up!");
-        }
+            throw new UnexpectedException("Couldn't create a socket");
+        } 
+
     }
 
     public static int wordCount(String text){

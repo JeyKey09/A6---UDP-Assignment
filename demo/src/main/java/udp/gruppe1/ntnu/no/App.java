@@ -12,7 +12,7 @@ public class App
 {
     public static void main( String[] args ) throws UnexpectedException
     {
-        try(Client client = new Client();) {
+        try(Client client = new Client()) {
             String hostadress = "129.241.152.12";
             int port = 1234;
             try {

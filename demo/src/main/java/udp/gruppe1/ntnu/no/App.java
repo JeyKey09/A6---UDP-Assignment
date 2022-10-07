@@ -35,15 +35,15 @@ public class App
     }
 
     public static int wordCount(String text){
-        if(!text.contains(" ")){
+        System.out.println(text);
+        if(text.split(" ").length > 1){
+            return text.split(" ").length;
+        }
+        if(text.matches("[a-z A-Z]*")){
+            System.out.println("i got here");
             return 1;
         }
-        if(!text.matches("[a-z A-Z 0-9 , . !]*")){
-            return 0;
-        } 
-        System.out.println("Tom");
-            System.out.println(text.split(" ").length);
-            return text.split(" ").length;
+        return 0;
         
     }
 

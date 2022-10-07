@@ -15,16 +15,18 @@ public class App
         try(Client client = new Client()) {
             String hostadress = "129.241.152.12";
             int port = 1234;
-            try {
-                String task = client.sendAndReceive(hostadress, port, "task");
-                String responseMessage = isQuestion(task)+" "+wordCount(task);
-                if(client.sendAndReceive(hostadress, port, responseMessage).equals("ok")){
-                    System.out.println("We did it!");
-                } else{
-                    System.out.println("We did not do it!");
+            for(int i = 0; i < 3; i++){
+                try {
+                    String task = client.sendAndReceive(hostadress, port, "task");
+                    String responseMessage = isQuestion(task)+" "+wordCount(task);
+                    if(client.sendAndReceive(hostadress, port, responseMessage).equals("ok")){
+                        System.out.println("We did it!");
+                    } else{
+                        System.out.println("We did not do it!");
+                    }
+                } catch (Exception e) {
+                    System.out.println("We fucked up!");
                 }
-            } catch (Exception e) {
-                System.out.println("We fucked up!");
             }
         } catch (Exception e) {
             throw new UnexpectedException("Couldn't create a socket");

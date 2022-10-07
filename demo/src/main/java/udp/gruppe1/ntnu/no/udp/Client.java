@@ -1,6 +1,5 @@
 package udp.gruppe1.ntnu.no.udp;
 
-import java.lang.reflect.GenericArrayType;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;

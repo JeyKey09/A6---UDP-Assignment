@@ -11,11 +11,10 @@ public class Client implements java.lang.AutoCloseable {
 
     public Client() throws UnexpectedException {
         try {
-            this.socket = new DatagramSocket();  
+            this.socket = new DatagramSocket();
         } catch (Exception e) {
             throw new UnexpectedException("Couldn't create socket");
         }
-        
     }
 
     public String sendAndReceive(String hostname, int port, String message)
@@ -23,21 +22,27 @@ public class Client implements java.lang.AutoCloseable {
         if (port < 0 || hostname == null || hostname.isEmpty() || message.isEmpty()) {
             throw new IllegalArgumentException("Some of the argument is not valid");
         }
-        byte[] buffer = new byte[1024];
-
+        DatagramPacket response;
         try {
             InetAddress address = InetAddress.getByName(hostname);
-            DatagramPacket response = new DatagramPacket(buffer, buffer.length);
             DatagramPacket request = new DatagramPacket(message.getBytes(), message.getBytes().length, address, port);
-            try {
-                this.socket.send(request);
-                this.socket.receive(response);
-            }catch(Exception e){
-                throw new UnexpectedException("Wasen't able to send/recieve message");
-            }
-            return new String(response.getData(), 0, response.getLength());
+            response = useSocket(request);
         } catch (Exception e) {
-            throw new UnexpectedException("Some of your data may be wrong");
+            throw new UnexpectedException("Wasn't able to send/receive message");
+        }
+        return new String(response.getData(), 0, response.getLength());
+    }
+
+    private DatagramPacket useSocket(DatagramPacket request) throws UnexpectedException {
+        byte[] buffer = new byte[1024];
+        DatagramPacket response;
+        try {
+            response = new DatagramPacket(buffer, buffer.length);
+            this.socket.send(request);
+            this.socket.receive(response);
+            return response;
+        } catch (Exception e) {
+            throw new UnexpectedException("Something went wrong when sending/receiving the packet");
         }
     }
 

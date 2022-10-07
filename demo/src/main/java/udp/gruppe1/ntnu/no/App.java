@@ -35,7 +35,7 @@ public class App
     }
 
     public static int wordCount(String text){
-        System.out.println(text);
+        System.out.println("-" + text + "-");
         if(text.split(" ").length > 1){
             return text.split(" ").length;
         }

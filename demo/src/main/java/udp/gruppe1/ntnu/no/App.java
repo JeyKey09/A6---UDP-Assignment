@@ -35,12 +35,10 @@ public class App
     }
 
     public static int wordCount(String text){
-        System.out.println("-" + text + "-");
         if(text.split(" ").length > 1){
             return text.split(" ").length;
         }
-        if(text.matches("[a-z A-Z]*")){
-            System.out.println("i got here");
+        if(text.matches(".*[a-zA-Z].*")){
             return 1;
         }
         return 0;
